@@ -1,4 +1,5 @@
 from pages.base_page import BasePage
+import time
 from locators.main_page_locators import MainPageLocators
 from urls import Urls
 from selenium.webdriver.support.ui import WebDriverWait
@@ -70,6 +71,7 @@ class MainPage(BasePage):
         simulateDragDrop(arguments[0], arguments[1]);
         """
         self.driver.execute_script(script, ingredients[index], basket)
+        time.sleep(3)
 
     @allure.step('Клик на кнопку «Оформить заказ»')
     def click_checkout_button(self):

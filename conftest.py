@@ -17,7 +17,7 @@ def driver(request):
         driver = webdriver.Firefox()
         driver.implicitly_wait(5)
 
-    driver.set_window_size(1280, 800)
+    driver.maximize_window()
     yield driver
     driver.quit()
 
