@@ -28,4 +28,7 @@ class MainPageLocators:
 
     # Модальное окно с номером заказа
     ORDER_MODAL = (By.XPATH, '//h2[contains(@class, "Modal_modal__title__") and contains(@class, "text_type_digits-large")]')
-    ORDER_MODAL_CLOSE = (By.CSS_SELECTOR, '[class*="Modal_modal__close"]')
+    CLOSE_MODAL_BUTTON = (By.XPATH, '//button[contains(@class, "Modal_modal__close_modified") and contains(@class, "Modal_modal__close")]')
+    ORDER_NUMBER = (By.CSS_SELECTOR, '.Modal_modal__title__2L34m')
+
+     

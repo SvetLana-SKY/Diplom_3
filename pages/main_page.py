@@ -91,3 +91,12 @@ class MainPage(BasePage):
     @allure.step('Клик на кнопку «Личный Кабинет»')
     def click_login_account_button(self):
         self.click_to_element(MainPageLocators.LOGIN_ACCOUNT_BUTTON)
+
+
+    @allure.step('Дождаться появления номера заказа в модалке')
+    def wait_for_order_number(self):
+        order_id = '9999'
+        while order_id == '9999':
+            order_id = self.get_element_text(MainPageLocators.ORDER_NUMBER)
+        return order_id
+    

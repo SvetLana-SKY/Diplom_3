@@ -4,7 +4,7 @@ import requests
 
 from urls import Urls
 from faker import Faker
-from pages.login_page import LoginPage
+
 
 
 @pytest.fixture(params=["chrome", "firefox"])
@@ -15,6 +15,7 @@ def driver(request):
         driver = webdriver.Chrome()
     elif browser == "firefox":
         driver = webdriver.Firefox()
+        driver.implicitly_wait(5)
 
     driver.set_window_size(1280, 800)
     yield driver
