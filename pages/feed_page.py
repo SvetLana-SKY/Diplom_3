@@ -2,7 +2,7 @@
 import allure
 from pages.base_page import BasePage
 from locators.feed_page_locators import FeedPageLocators
-from locators.main_page_locators import MainPageLocators
+
 from urls import Urls
 
 
@@ -10,22 +10,7 @@ class OrderFeedPage(BasePage):
 
     @allure.step('Открыть ленту заказов')
     def open_feed_page(self):
-        self.driver.get(Urls.FEED_PAGE_URL)
-
-    @allure.step('Получить значение счётчика «Выполнено за всё время»')
-    def get_all_time_counter(self):
-        return int(self.find_element_with_wait(FeedPageLocators.ALL_TIME_COUNTER).text)
-import allure
-from pages.base_page import BasePage
-from locators.feed_page_locators import FeedPageLocators
-from urls import Urls
-
-
-class OrderFeedPage(BasePage):
-
-    @allure.step('Открыть ленту заказов')
-    def open_feed_page(self):
-        self.driver.get(Urls.FEED_PAGE_URL)
+        self.open(Urls.FEED_PAGE_URL)
 
     @allure.step('Получить значение счётчика «Выполнено за всё время»')
     def get_all_time_counter(self):

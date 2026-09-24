@@ -2,9 +2,6 @@ from pages.base_page import BasePage
 import time
 from locators.main_page_locators import MainPageLocators
 from urls import Urls
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-
 import allure
 
 
@@ -12,7 +9,7 @@ class MainPage(BasePage):
 
     @allure.step('Открыть главную страницу')
     def open_main_page(self):
-        self.driver.get(Urls.MAIN_PAGE_URL)
+        self.open(Urls.MAIN_PAGE_URL)
 
     @allure.step('Клик на вкладку «Конструктор»')
     def click_constructor_tab(self):
@@ -24,7 +21,7 @@ class MainPage(BasePage):
 
     @allure.step('Клик по ингредиенту')
     def click_ingredient(self, index=0):
-        ingredients = self.driver.find_elements(*MainPageLocators.INGREDIENT_CARDS)
+        ingredients = self.find_elements_with_wait(MainPageLocators.INGREDIENT_CARDS)
         ingredients[index].click()
 
     @allure.step('Проверка, что модальное окно ингредиента открыто')
@@ -41,13 +38,11 @@ class MainPage(BasePage):
 
     @allure.step('Проверка, что модальное окно ингредиента закрыто')
     def is_ingredient_modal_closed(self):
-        return WebDriverWait(self.driver, self.timeout).until(
-            EC.invisibility_of_element_located(MainPageLocators.INGREDIENT_MODAL)
-        )
+        return self.wait_for_invisibility(MainPageLocators.INGREDIENT_MODAL)
 
     @allure.step('Получить значение счётчика ингредиента')
     def get_ingredient_counter(self, index=0):
-        ingredients = self.driver.find_elements(*MainPageLocators.INGREDIENT_CARDS)
+        ingredients = self.find_elements_with_wait(MainPageLocators.INGREDIENT_CARDS)
         counters = ingredients[index].find_elements(*MainPageLocators.INGREDIENT_COUNTER)
         if counters:
             return int(counters[0].text)
@@ -56,7 +51,7 @@ class MainPage(BasePage):
     @allure.step('Добавить ингредиент в заказ (drag-and-drop)')
     def add_ingredient_to_order(self, index=0):
         self.find_element_with_wait(MainPageLocators.INGREDIENT_CARDS)
-        ingredients = self.driver.find_elements(*MainPageLocators.INGREDIENT_CARDS)
+        ingredients = self.find_elements_with_wait(MainPageLocators.INGREDIENT_CARDS)
         basket = self.find_element_with_wait(MainPageLocators.ORDER_BASKET)
 
         script = """
@@ -70,7 +65,7 @@ class MainPage(BasePage):
         }
         simulateDragDrop(arguments[0], arguments[1]);
         """
-        self.driver.execute_script(script, ingredients[index], basket)
+        self.execute_script(script, ingredients[index], basket)
         time.sleep(3)
 
     @allure.step('Клик на кнопку «Оформить заказ»')
